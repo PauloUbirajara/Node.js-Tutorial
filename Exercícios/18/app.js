@@ -1,7 +1,11 @@
 const Joi = require('joi');
 
 const arrayString = ['banana', 'bacon', 'cheese'];
-const arrayObjects = [{ example: 'example1' }, { example: 'example2' }];
+const arrayObjects = [
+	{ example: 'example1' },
+	{ example: 'example2' },
+	{ example: 'example3' }
+];
 
 const userInput = {
 	personalInfo: {
@@ -31,15 +35,19 @@ const personalInfoSchema = Joi.object().keys({
 //> Verifica se todos itens são string
 const preferencesSchema = Joi.array().items(Joi.string());
 
-const schema = Joi.object().keys({
+const userSchema = Joi.object().keys({
 	personalInfo: personalInfoSchema,
 	preferences: preferencesSchema
 });
 
-const result = schema.validate(userInput, schema);
+const objectSchema = Joi.array().items(
+	Joi.object().keys({
+		example: Joi.string().required()
+	})
+);
 
-if (result['error']) {
-	console.log(result['error']);
-} else {
-	console.log(result.value);
+const results = [userSchema.validate(userInput), objectSchema.validate(arrayObjects)];
+
+for (let result of results) {
+	console.log(result['error'] || result['value']);
 }
