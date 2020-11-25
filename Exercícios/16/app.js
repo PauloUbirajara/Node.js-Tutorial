@@ -7,7 +7,7 @@ app.use('/public', express.static(path.join(__dirname, 'static')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/', (request, response) => {
+app.get('/', (_, response) => {
 	response.sendFile(path.join(__dirname, 'static', 'index.html'));
 });
 
@@ -17,5 +17,3 @@ app.post('/', (request, response) => {
 });
 
 app.listen(8080);
-
-// Continuar...

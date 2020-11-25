@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Static HTML File</title>
+	<link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body>
+	<form method="POST" action='/' id='form'>
+		<label for="email">E-mail: </label>
+		<input type="email" name='email' />
+		<br>
+		<label for="password">Password: </label>
+		<input type="password" name='password' />
+		<br>
+		<input type="submit" value='Submit!' />
+	</form>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(() => {
+			$('#form').submit((e) => {
+				e.preventDefault();
+				$.ajax({
+					url: '/',
+					type: 'post',
+					contentType: 'application/json',
+					data: JSON.stringify(('#form').serializeArray()),
+					success: (response) => {
+						console.log("Successfully got response!");
+						console.log(response);
+					}
+				});
+			});
+		});
+	</script>
+</body>
+
+</html>
